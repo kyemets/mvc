@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Users</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <h1>Create user</h1>
+        <form action="/users/create" method="post">
+            <label>Name</label>
+            <input type="text" name="username" />
+            <br />
+            <br />
+            <label>Age</label>
+            <input type="number" name="age" min="1" max="100" />
+            <br />
+            <br />
+            <input type="submit" value="send" />
+        </form>
+        <h1>List of users</h1>
+        {{#each users}}
+            <div style="border: 1px solid green; padding: 15px">
+                <h3>Username - {{this.username}}</h3>
+                <h3>Age - {{this.age}}</h3>
+                <button onclick="removeById('{{this.id}}')">
+                    delete
+                </button>
+            </div>
+        {{/each}}
+        <script>
+            function removeById(id) {
+            fetch(`http://localhost:5050/users/remove?id=${id}`, { method:
+            'DELETE' }) .then(() => window.location.reload()) .catch(error =>
+            console.error('Error deleting user:', error)); }
+        </script>
+    </body>
+</html>
